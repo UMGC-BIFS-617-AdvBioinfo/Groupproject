@@ -1,1 +1,19 @@
 #Start group project here. 
+print("This program will search for a file in your working directory.")
+
+def filefinder():
+    import os
+    file=os.listdir()
+    count=1
+    for i in range(5):
+        filename=input('what is your file name: ')
+        if filename in file:
+            print("file found")
+            break
+        elif count==5:
+            print("Sorry can't find the file")
+        else:
+            print("Try again")
+        count+=1
+        #print(count)#had this for testing to see what it was doing.
+filefinder()
