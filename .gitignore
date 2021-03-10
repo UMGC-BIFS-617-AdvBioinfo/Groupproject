@@ -25,7 +25,7 @@ filefinder()
 #work in progess
 # convert to reverse compliment 
 # than use this in a loop to process multiple seqs in a file.
-def makerevers(Seq):
+def makereverse(Seq):
     #first change from upper to lowercase
     seqA2t=Seq.replace("A","t")
     seqT2a=seqA2t.replace("T","a")
@@ -33,4 +33,4 @@ def makerevers(Seq):
     seqG2c=seqC2g.replace("G","c")
     seqdnacomp=seqG2c.upper()
     return seqdnacomp
-#Sandra- todo find 4-6 ORFS, strat postion, len 
+#Sandra- todo find 4-6 ORFS, strat postion, len
