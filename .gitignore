@@ -1,4 +1,5 @@
 #Start group project here. 
+
 print("This program will search for a file in your working directory.")
 
 def filefinder():
@@ -17,3 +18,18 @@ def filefinder():
         count+=1
         #print(count)#had this for testing to see what it was doing.
 filefinder()
+
+
+#Sandra
+#part 3 
+#work in progess
+# convert to reverse compliment 
+# than use this in a loop to process multiple seqs in a file.
+def makerevers(Seq):
+    #first change from upper to lowercase
+    seqA2t=Seq.replace("A","t")
+    seqT2a=seqA2t.replace("T","a")
+    seqC2g=seqT2a.replace("C", "g")
+    seqG2c=seqC2g.replace("G","c")
+    seqdnacomp=seqG2c.upper()
+    return seqdnacomp
