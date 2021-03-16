@@ -6,7 +6,9 @@
 
 
 #Karina's old code maybe we can delete. (Karina can we delet this part? I added your other code.)
-print("This program will search for a file in your working directory.")
+#print("This program will search for a file in your working directory.") Hi Sandra. I didn't do this part my part is in #karina and I just pasted the last version of
+# the code that is the last one that I posted in the discussion, where the code finds the orfs with the length that the user asks for. We still needs to look for the position
+#of the orfs and the orfs in reading frames 4,5,6 and put all the parts together.
 
 #def filefinder():
 #    import os
