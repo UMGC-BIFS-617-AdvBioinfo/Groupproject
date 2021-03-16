@@ -1,8 +1,8 @@
 #Start group project here. 
 
 #Karina can you see this? is it the main branch?
-#Can you edit it? With out making a fork? That means that is should stay here on Groupproject/.gitignore and not move to Karina/
-
+#Can you edit it? With out making a fork? That means that is should stay here on UMGC-BIFS-617-AdvBioinfo/Groupproject/.gitignore and not move to kariBifs/Groupproject/.gitinore
+#If so will you leave me a message. 
 
 print("This program will search for a file in your working directory.")
 
