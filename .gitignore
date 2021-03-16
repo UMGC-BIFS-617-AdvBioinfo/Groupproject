@@ -1,5 +1,9 @@
 #Start group project here. 
 
+#Karina can you see this? is it the main branch?
+#Can you edit it? With out making a fork? That means that is should stay here on Groupproject/.gitignore and not move to Karina/
+
+
 print("This program will search for a file in your working directory.")
 
 def filefinder():
