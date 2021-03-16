@@ -4,24 +4,96 @@
 #Can you edit it? With out making a fork? That means that is should stay here on UMGC-BIFS-617-AdvBioinfo/Groupproject/.gitignore and not move to kariBifs/Groupproject/.gitinore
 #If so will you leave me a message. 
 
+
+#Karina's old code maybe we can delete. (Karina can we delet this part? I added your other code.)
 print("This program will search for a file in your working directory.")
 
-def filefinder():
-    import os
-    file=os.listdir()
-    count=1
-    for i in range(5):
-        filename=input('what is your file name: ')
-        if filename in file:
-            print("file found")
-            break
-        elif count==5:
-            print("Sorry can't find the file")
-        else:
+#def filefinder():
+#    import os
+ #   file=os.listdir()
+  #  count=1
+   # for i in range(5):
+    #    filename=input('what is your file name: ')
+     #   if filename in file:
+      #      print("file found")
+       #     break
+        #elif count==5:
+#            print("Sorry can't find the file")
+#        else:
             print("Try again")
-        count+=1
+#        count+=1
         #print(count)#had this for testing to see what it was doing.
-filefinder()
+#filefinder()
+
+#Karina
+#Karina's code for part 1 
+import os
+import re
+
+
+def main():
+    #Display the start-up message
+    startup_message()
+    # ask for name of the file and length of the orfs
+    my_seq=input("Enter your file name\n")
+        #creates dictionary
+    info={}
+    file=open(my_seq)#open file
+    for line in file:
+        line=line.upper().rstrip('\n').replace("-","")#convert to upper,get rid of newlines and gaps
+        if line.startswith('>'):
+            header=line[1:]
+            info[header]=''#Here we have the dictionary info with the key header that have all the lines that start with >, there is no value yet
+        else:
+            info[header]=info[header]+line#here we add the value(the lines that do not have >
+    print(info)
+
+   #Using the values from the dictionary we call the functions(read_file1, read_file2, read_file3) in order to find the reading frames. The argument(x)is
+    #each value of the dictionary(each dna sequence)
+    
+    for x in info.values():
+        reading1=read_file1(x)
+        reading2=read_file2(x)
+        reading3=read_file3(x)
+        print("The reading frame1:\n",reading1)
+        print("The reading frame2:\n",reading2)
+        print("The reading frame3:\n",reading3)
+    #call the function(find_orfs) to find orfs in the 3 reading frames for each sequence
+        orf_1=find_orfs(reading1)
+        orf_2=find_orfs(reading2)
+        orf_3=find_orfs(reading3)
+        print("orfs in the reading frame1 are:\n",orf_1)
+        print("orfs in the reading frame2 are:\n",orf_2)
+        print("orfs in the reading frame3 are:\n",orf_3)
+    
+
+
+        
+#we define the funtions called above    
+def startup_message():
+    print("""This program will find the orfs in your sequence.Enter the name
+    of your sequence and press enter to continue\n\n""")
+
+def read_file1(dna):
+    for x in dna:
+        reading1=dna[0:]#reading1 starts in the position 0 for each dna sequence(x)=reading frame1
+        return reading1
+def read_file2(dna): 
+    for x in dna:
+        reading2=dna[1:]#same position1=reading frame2
+        return reading2
+def read_file3(dna):
+    for x in dna:
+        reading3=dna[2:]#same position2=reading frame 3
+        return reading3
+def find_orfs(dna):
+            pattern=re.findall(r"A[TU]G[AUTGC]{50,}T[AG][AG]",dna)#use regex to find orfs we have to change the regex in order to accomodate the user length
+            return pattern
+
+    
+   
+    
+main()
 
 
 #Sandra
