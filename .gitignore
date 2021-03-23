@@ -33,26 +33,7 @@ def main():
         reading3=read_file3(x)
         
         
-        orf_1=find_orfs(reading1)
-        for x in orf_1:
-            leng_orf=len(x)#for the length of orfs in reading frame 1 for each sequence in file
-            if leng_orf>=orf_length:
-                print("orf1 ",x,"length ",leng_orf)#only prints the orfs and length that are equal or greater to the user input length in reading frame1
-            else:
-                orf_length==leng_orf
-                print("the minimum is 50",x,leng_orf)
-                #orf_length=int(input("enter the minimum orf's length "))
-                
-        orf_2=find_orfs(reading2)
-        for x in orf_2:
-            leng_orf=len(x)#for the length of orfs in reading frame 2 for each sequence in file
-            if leng_orf>=orf_length:
-                print("orf2 ",x,"length ",leng_orf)#only prints the orfs and length that are equal or greater to the user input lengthorf_3=find_orfs(reading3)
-        orf_3=find_orfs(reading3)
-        for x in orf_3:
-            leng_orf=len(x)#for the length of orfs in reading frame 1 for each sequence in file
-            if leng_orf>=orf_length:
-                print("orf3 ",x,"length ",leng_orf)#only prints the orfs and length that are equal or greater to the user input length
+       
             
         
         
@@ -75,9 +56,7 @@ def read_file3(dna):
         return reading3
 
     
-def find_orfs(dna):
-            pattern=re.findall(r"A[TU]G[AUTGC]{50,}T[AG][AG]",dna)#use regex to find orfs we have to change the regex in order to accomodate the user length
-            return pattern
+
 
 
 main()
