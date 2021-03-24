@@ -136,3 +136,5 @@ def findingframesreverse(reverseseq):
 #reverseseq=makereverse(TestSeq)       
 #print(findingframesfoward(TestSeq)
 #print(findingframesreverse(reverseseq))
+
+#make this third branch
