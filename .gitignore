@@ -73,7 +73,7 @@ import re
 # convert to reverse compliment 
 # than use this in a loop to process multiple seqs in a file.
 #updated makereversefunction to actually reverse and not just complement.
-def makereverse(seq):
+def makereverse(seq): #Author Sandra Shannon
     #first change from upper to lowercase
     seqA2t=seq.replace("A","t")
     seqT2a=seqA2t.replace("T","a")
@@ -86,7 +86,7 @@ def makereverse(seq):
 #new code 16Mar2021
 #test sequences 
 TestSeq= """CCTCAGCGAGGACAGCAAGGGACTAGCCAGGAGGGAGAACAGAAACTCCAGAACATCTTGGAAATAGCTCCCAGAAAAGCAAGCAGCCAACCAGGCAGGTTCTGTCCCTTTCACTCACTGGCCCAAGGCGCCACATCTCCCTCCAGAAAAGACACCATGAGCACAGAAAGCATGATCCGCGACGTGGAACTGGCAGAAGAGGCACTCCCCCAAAAGATGGGGGGCTTCCAGAACTCCAGGCGGTGCCTATGTCTCAGCCTCTTCTCATTCCTGCTTGTGGCAGGGGCCACCACGCTCTTCTGTCTACTGAACTTCGGGGTGATCGGTCCCCAAAGGGATGAGAAGTTCCCAAATGGCCTCCCTCTCATCAGTTCTATGGCCCAGACCCTCACACTCAGATCATCTTCTCAAAATTCGAGTGACAAGCCTGTAGCCCACGTCGTAGCAAACCACCAAGTGGAGGAGCAGCTGGAGTGGCTGAGCCAGCGCGCCAACGCCCTCCTGGCCAACGGCATGGATCTCAAAGACAACCAACTAGTGGTGCCAGCCGATGGGTTGTACCTTGTCTACTCCCAGGTTCTCTTCAAGGGACAAGGCTGCCCCGACTACGTGCTCCTCACCCACACCGTCAGCCGATTTGCTATCTCATACCAGGAGAAAGTCAACCTCCTCTCTGCCGTCAAGAGCCCCTGCCCCAAGGACACCCCTGAGGGGGCTGAGCTCAAACCCTGGTATGAGCCCATATACCTGGGAGGAGTCTTCCAGCTGGAGAAGGGGGACCAACTCAGCGCTGAGGTCAATCTGCCCAAGTACTTAGACTTTGCGGAGTCCGGGCAGGTCTACTTTGGAGTCATTGCTCTGTGAAGGGAATGGGTGTTCATCCATTCTCTACCCAGCCCCCACTCTGACCCCTTTACTCTGACCCCTTTATTGTCTACTCCTCAGAGCCCCCAGTCTGTATCCTTCTAACTTAGAAAGGGGATTATGGCTCAGGGTCCAACTCTGTGCTCAGAGCTTTCAACAACTACTCAGAAACACAAGATGCTGGGACAGTGACCTGGACTGTGGGCCTCTCATGCACCACCATCAAGGACTCAAATGGGCTTTCCGAATTCACTGGAGCCTCGAATGTCCATTCCTGAGTTCTGCAAAGGGAGAGTGGTCAGGTTGCCTCTGTCTCAGAATGAGGCTGGATAAGATCTCAGGCCTTCCTACCTTCAGACCTTTCCAGATTCTTCCCTGAGGTGCAATGCACAGCCTTCCTCACAGAGCCAGCCCCCCTCTATTTATATTTGCACTTATTATTTATTATTTATTTATTATTTATTTATTTGCTTATGAATGTATTTATTTGGAAGGCCGGGGTGTCCTGGAGGACCCAGTGTGGGAAGCTGTCTTCAGACAGACATGTTTTCTGTGAAAACGGAGCTGAGCTGTCCCCACCTGGCCTCTCTACCTTGTTGCCTCCTCTTTTGCTTATGTTTAAAACAAAATATTTATCTAACCCAATTGTCTTAATAACGCTGATTTGGTGACCAGGCTGTCGCTACATCACTGAACCTCTGCTCCCCACGGGAGCCGTGACTGTAATCGCCCTACGGGTCATTGAGAGAAATAA"""
-#function for open reading frames.
+#function for open reading frames.#Author Sandra Shannon
 orf_length=eval(input("enter the minimum orf's length "))#ask for length orf
 def findORF(seqtosearch, orf_length):
     min=orf_length
@@ -106,14 +106,14 @@ def findORF(seqtosearch, orf_length):
 #16Mar2020 sandra new todo match input code to here, creat a new dictorany to store the print("|FRAME... data.)
     
 #new code 23Mar2021 SBS
-#function for getting the Frames 
+#function for getting the Frames #Author Sandra Shannon
 def findingframesfoward(seq): 
     nextstartbase=0
     frameconter=1
     frames={}
     for start in range(0,3):
         seqofframe=seq[nextstartbase:len(seq)]
-        key="Frame"+str(frameconter)
+        key=str(frameconter)
         value=seqofframe
         frames[key]=value
         #print(frames)
@@ -121,13 +121,13 @@ def findingframesfoward(seq):
         frameconter+=1
     return frames
 
-def findingframesreverse(reverseseq): 
+def findingframesreverse(reverseseq): #Author Sandra Shannon
     nextstartbase=0
     frameconter=4
     frames={}
     for start in range(0,3):
         seqofframe=reverseseq[nextstartbase:len(reverseseq)]
-        key="Frame"+str(frameconter)
+        key=str(frameconter)
         value=seqofframe
         frames[key]=value
         #print(frames)
@@ -144,3 +144,4 @@ frowardframes=findingframesfoward(TestSeq)
 reverseframes=findingframesreverse(reverseseq)
 ORFs=findORF(frowardframes, orf_length)
 ORFs=findORF(reverseframes,orf_length)
+#to do make the functions makereverse(seq) findingframesfoward(seq) findingframesreverse(reverseseq) work with the input dictonary. This can be done similar to the  findORF function
