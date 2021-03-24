@@ -66,6 +66,8 @@ main()
 #Sandra
 #part 3 
 #work in progess
+#import form my part of code remove in final only need once
+import re
 # convert to reverse compliment 
 # than use this in a loop to process multiple seqs in a file.
 # convert to reverse compliment 
@@ -73,7 +75,7 @@ main()
 #updated makereversefunction to actually reverse and not just complement.
 def makereverse(seq):
     #first change from upper to lowercase
-    seqA2t=Seq.replace("A","t")
+    seqA2t=seq.replace("A","t")
     seqT2a=seqA2t.replace("T","a")
     seqC2g=seqT2a.replace("C", "g")
     seqG2c=seqC2g.replace("G","c")
@@ -82,22 +84,24 @@ def makereverse(seq):
     return seqdnareversed
     
 #new code 16Mar2021
-#test sequences need to be one long line like this otherwise cause \n in the dictionart
+#test sequences 
 TestSeq= """CCTCAGCGAGGACAGCAAGGGACTAGCCAGGAGGGAGAACAGAAACTCCAGAACATCTTGGAAATAGCTCCCAGAAAAGCAAGCAGCCAACCAGGCAGGTTCTGTCCCTTTCACTCACTGGCCCAAGGCGCCACATCTCCCTCCAGAAAAGACACCATGAGCACAGAAAGCATGATCCGCGACGTGGAACTGGCAGAAGAGGCACTCCCCCAAAAGATGGGGGGCTTCCAGAACTCCAGGCGGTGCCTATGTCTCAGCCTCTTCTCATTCCTGCTTGTGGCAGGGGCCACCACGCTCTTCTGTCTACTGAACTTCGGGGTGATCGGTCCCCAAAGGGATGAGAAGTTCCCAAATGGCCTCCCTCTCATCAGTTCTATGGCCCAGACCCTCACACTCAGATCATCTTCTCAAAATTCGAGTGACAAGCCTGTAGCCCACGTCGTAGCAAACCACCAAGTGGAGGAGCAGCTGGAGTGGCTGAGCCAGCGCGCCAACGCCCTCCTGGCCAACGGCATGGATCTCAAAGACAACCAACTAGTGGTGCCAGCCGATGGGTTGTACCTTGTCTACTCCCAGGTTCTCTTCAAGGGACAAGGCTGCCCCGACTACGTGCTCCTCACCCACACCGTCAGCCGATTTGCTATCTCATACCAGGAGAAAGTCAACCTCCTCTCTGCCGTCAAGAGCCCCTGCCCCAAGGACACCCCTGAGGGGGCTGAGCTCAAACCCTGGTATGAGCCCATATACCTGGGAGGAGTCTTCCAGCTGGAGAAGGGGGACCAACTCAGCGCTGAGGTCAATCTGCCCAAGTACTTAGACTTTGCGGAGTCCGGGCAGGTCTACTTTGGAGTCATTGCTCTGTGAAGGGAATGGGTGTTCATCCATTCTCTACCCAGCCCCCACTCTGACCCCTTTACTCTGACCCCTTTATTGTCTACTCCTCAGAGCCCCCAGTCTGTATCCTTCTAACTTAGAAAGGGGATTATGGCTCAGGGTCCAACTCTGTGCTCAGAGCTTTCAACAACTACTCAGAAACACAAGATGCTGGGACAGTGACCTGGACTGTGGGCCTCTCATGCACCACCATCAAGGACTCAAATGGGCTTTCCGAATTCACTGGAGCCTCGAATGTCCATTCCTGAGTTCTGCAAAGGGAGAGTGGTCAGGTTGCCTCTGTCTCAGAATGAGGCTGGATAAGATCTCAGGCCTTCCTACCTTCAGACCTTTCCAGATTCTTCCCTGAGGTGCAATGCACAGCCTTCCTCACAGAGCCAGCCCCCCTCTATTTATATTTGCACTTATTATTTATTATTTATTTATTATTTATTTATTTGCTTATGAATGTATTTATTTGGAAGGCCGGGGTGTCCTGGAGGACCCAGTGTGGGAAGCTGTCTTCAGACAGACATGTTTTCTGTGAAAACGGAGCTGAGCTGTCCCCACCTGGCCTCTCTACCTTGTTGCCTCCTCTTTTGCTTATGTTTAAAACAAAATATTTATCTAACCCAATTGTCTTAATAACGCTGATTTGGTGACCAGGCTGTCGCTACATCACTGAACCTCTGCTCCCCACGGGAGCCGTGACTGTAATCGCCCTACGGGTCATTGAGAGAAATAA"""
-
 #function for open reading frames.
+orf_length=eval(input("enter the minimum orf's length "))#ask for length orf
 def findORF(seqtosearch, orf_length):
     min=orf_length
     pattern="A[TU]G[AUTGC]{" +str(min)+ """,}(TAA|TAG|TGA)"""
-    ORF=re.finditer(pattern, seqtosearch)
-    for match in ORF:
-        run_start=match.start()
-        seq=match.group()
-        run_len=len(seq)
-        print("|FRAME=1 "+"POS="+str(run_start)+" LEN="+str(run_len)+"\n"+seq)# need to change frame to match Key name from
-        #dictornaris made in findingframesfoward and  findingframesreverse. 
+    for key, value in seqtosearch.items():
+        ORF=re.finditer(pattern, value)
+        for match in ORF:
+            run_start=match.start()
+            seq=match.group()
+            run_len=len(seq)
+            print("|FRAME="+key+" POS="+str(run_start)+" LEN="+str(run_len)+"\n"+seq)
+
+
         
-ORFs=findORF(Seq,orf_length)
+
 #Sandra- todo find 4-6 ORFS, strat postion, len-done startpostion, len and seq
 #16Mar2020 sandra new todo match input code to here, creat a new dictorany to store the print("|FRAME... data.)
     
@@ -133,8 +137,10 @@ def findingframesreverse(reverseseq):
 
 
 #Testing stuff
-#reverseseq=makereverse(TestSeq)       
-#print(findingframesfoward(TestSeq)
+reverseseq=makereverse(TestSeq)       
+#print(findingframesfoward(TestSeq))
 #print(findingframesreverse(reverseseq))
-
-#make this third branch
+frowardframes=findingframesfoward(TestSeq)
+reverseframes=findingframesreverse(reverseseq)
+ORFs=findORF(frowardframes, orf_length)
+ORFs=findORF(reverseframes,orf_length)
