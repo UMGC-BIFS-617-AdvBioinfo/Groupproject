@@ -216,6 +216,8 @@ ORFs=findORF(frowardframes, orf_length)
 ORFs=findORF(reverseframes,orf_length)
 #to do make the functions makereverse(seq) findingframesfoward(seq) findingframesreverse(reverseseq) work with the input dictonary. This can be done similar to the  findORF function
 
+
+#Author: Kianna Blount
 import re
 import os
 
