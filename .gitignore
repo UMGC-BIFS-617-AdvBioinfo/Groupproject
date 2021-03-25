@@ -5,6 +5,8 @@ import os
 import re
 def main():
     
+   def main():
+    
     startup_message()#Display the start-up message
     my_seq=input("Enter your file name\n")#ask name of file
     orf_length=eval(input("enter the minimum orf's length ")) 
@@ -24,46 +26,38 @@ def main():
     #each value of the dictionary(each dna sequence)
     
     count=0
-    frames=[]
-    ORFlist=[]
     for x in info.values():
         count+=1
         print("sequence",count)#it counts the sequences in the file in order to get a clearer output
         reading1=read_file1(x)
-        frames.append(reading1)
-        
         reading2=read_file2(x)
-        frames.append(reading2)
         reading3=read_file3(x)
-        frames.append(reading3)
+
+
         comp_strand=makereverse(x)
         #print("Complementary strand ",comp_strand)    
         re_com_strand=reverse(comp_strand)
         #print("reverse str",re_com_strand)
         reading4=read_file4(re_com_strand)
-        frames.append(reading4)
-        
+        #print("reading4",reading4)
         reading5=read_file5(re_com_strand)
-        frames.append(reading5)
-        
+        #print("reading5",reading5)
         reading6=read_file6(re_com_strand)
-        frames.append(reading6)
-        print("frames",frames)
+        #print("reading6",reading6)
+        start, length, seq=findORF(reading1,orf_length)
+        print("|Frame=1, Strand= + ","POS=",start+1,"LEN=",length-1, seq)
+        start, length, seq=findORF(reading2,orf_length)
+        print("|Frame=2, Srand= +","POS=",start+1,"LEN=",length-1, seq)
+        start, length, seq=findORF(reading3,orf_length)
+        print("|Frame=3, Strand= +","POS=",start+1,"LEN=",length-1, seq)
+        start, length, seq=findORF(reading4,orf_length)
+        print("|Frame=1, Strand=- ","POS=",start+1,"LEN=",length-1, seq)
+        start, length, seq=findORF(reading5,orf_length)
+        print("|Frame=2, Strand= - ","POS=",start+1,"LEN=",length-1, seq)
+        start, length, seq=findORF(reading6,orf_length)
+        print("|Frame=3,Strand= -","POS=",start+1,"LEN=",length-1, seq)
+          
         
-    
-#This part here was the part that I started a couple of hours ago trying to find orfs when I realized that the orf fiding function that we have is not working. 
-#It is an example that I got from internet, so we cannot use it and it is not working but it can give us an idea.
-    for i in range(len(frames)): #looping all the frames
-        start=0
-        while start <len(frames[i]): #looping each frame for start and stop codons 
-            if frames[i][start]=="ATG" or frames[i][start]=="AUG":
-                for stop in range(start+1,len(frames[i])):
-                         if frames[i][stop]=="TAA" or  frames[i][stop]=="TAG" or  frames[i][stop]=="TGA" :
-                                ORFlist.append(frames[i][start:stop]) # retrieve the orf 
-            start+=1
-    print("ORFlist ",str(ORFlist))
-    
-
 #we define the funtions called above    
 def startup_message():
     print("""This program will find the orfs in your sequence.Enter the name
@@ -84,7 +78,7 @@ def read_file3(dna):
 
     
 
-# this part was Sandra
+#Sandra
 
 # convert to reverse compliment 
 # than use this in a loop to process multiple seqs in a file.
@@ -113,8 +107,18 @@ def read_file6(dna):
         return reading6    
 
 
-
-
+#function for open reading frames.
+   
+def findORF(dna, orf_length):
+    min=orf_length
+    pattern="A[TU]G[AUTGC]{" +str(min)+ """,}(TAA|TAG|TGA)"""
+    ORF=re.finditer(pattern,dna)
+    for match in ORF:
+        run_start=match.start()
+        run_len=len(dna)
+        length=run_len-run_start
+        seq=match.group()
+        return run_start, length, seq
 
 
 main()
@@ -122,14 +126,11 @@ main()
 #and see the results.The parts were from before the update that Sandra made yesterday night
 #the output until here is:
 #seq1
-#frames[seq in frame1, seq in frame2, seq in frame3, seq in frame4, until frame 6]
+#frame 1 strand+ pos len
+#and the sequence
+#frame 2 the same
 #seq2
-#frames [seq in frame1,until frame6] and the same repeats until the last sequence in the file
-#Then I tried to loop the list frames into a function that finds orfs but it didn't work.When I put the orf funcion from Sandra the output was:
-#seq 1
-#orf in frame1:and the orf sequence
-#orf in frame2: and the orf sequence, the same for each frame in each sequence but it only found one orfs where there were more and trying different 
-#sequences found orfs where ther weren't.
+#frames 1 until 6 the same. 
 
 
 #Sandra
