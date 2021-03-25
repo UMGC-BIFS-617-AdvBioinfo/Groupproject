@@ -215,3 +215,54 @@ reverseframes=findingframesreverse(reverseseq)
 ORFs=findORF(frowardframes, orf_length)
 ORFs=findORF(reverseframes,orf_length)
 #to do make the functions makereverse(seq) findingframesfoward(seq) findingframesreverse(reverseseq) work with the input dictonary. This can be done similar to the  findORF function
+
+import re
+import os
+
+from Bio import SeqIO
+
+#Input DNA sequence info and codons
+data=SeqIO.read("testsequencefile.fasta","fasta")
+seq = str(data.seq)
+startcodon=["a","t","g"]
+stopcodon=[["t","a","g"],["t","g","a"],["t","a","a"]]
+
+#Search for start codons
+for j in len(seq):
+    a=0
+    b=j
+    if seq[b]==startcodon[a]:
+        a+=1
+        b+=1
+        if seq[b]==startcodon[a]:
+            a+=1
+            b+=1
+            if seq[b]==startcodon[a]:
+                orfstart.append(j)
+
+#Search for stop codons
+for i in len(stopcodon):
+    for j in len(seq):
+        a=0
+        b=j
+        if seq[b]==stopcodon[i][a]:
+            a+=1
+            b+=1
+            if seq[b]==stopcodon[i][a]:
+                a+=1
+                b+=1
+                if seq[b]==stopcodon[i][a]:
+                    orfstop.append(j)
+
+#Determine ORF
+i=0 ; j=0;
+while i<len(orfstart):
+    b=0
+    while j<len(orfstop):
+        a=j
+        if orfstop[j]>orfstart[i]:
+            "|"
+        else:
+            j+=1
+        i+=1
+        j=a
