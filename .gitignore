@@ -51,7 +51,8 @@ def main():
         print("frames",frames)
         
     
-#This part here was the part that I started a couple of hours ago trying to find orfs but is not working
+#This part here was the part that I started a couple of hours ago trying to find orfs when I realized that the orf fiding function that we have is not working. 
+#It is an example that I got from internet, so we cannot use it and it is not working but it can give us an idea.
     for i in range(len(frames)): #looping all the frames
         start=0
         while start <len(frames[i]): #looping each frame for start and stop codons 
@@ -124,7 +125,11 @@ main()
 #frames[seq in frame1, seq in frame2, seq in frame3, seq in frame4, until frame 6]
 #seq2
 #frames [seq in frame1,until frame6] and the same repeats until the last sequence in the file
-#Then I tried to loop the list frames into a function that finds orfs but it didn't work.
+#Then I tried to loop the list frames into a function that finds orfs but it didn't work.When I put the orf funcion from Sandra the output was:
+#seq 1
+#orf in frame1:and the orf sequence
+#orf in frame2: and the orf sequence, the same for each frame in each sequence but it only found one orfs where there were more and trying different 
+#sequences found orfs where ther weren't.
 
 
 #Sandra
