@@ -1,16 +1,16 @@
-#Start group project here. 
 
-#Karina
-import os
 import re
-def main():
-    
-   def main():
-    
-    startup_message()#Display the start-up message
+
+
+#Karina's code
+#startup_message()#Display the start-up message #I think this is supposed to be a function of something 
+    #it does not do anything
+
+def get_orflength():
+    orf_length=eval(input("enter the minimum orf's length "))#ask for length orf
+    return orf_length
+def getfile_info():
     my_seq=input("Enter your file name\n")#ask name of file
-    orf_length=eval(input("enter the minimum orf's length ")) 
-    #ask for length orf
     info={}#creates dictionary
     with open(my_seq)as file:#open file
         for line in file:
@@ -20,251 +20,159 @@ def main():
                 info[header]=''#Here we have the dictionary info with the key header that have all the lines that start with >, there is no value yet
                 continue
             else:
-                info[header]=info[header]+line#here we add the value(the lines that do not have >
-    #print(info)
-#Using the values from the dictionary we call the functions(read_file1, read_file2, read_file3) in order to find the reading frames. The argument(x)is
-    #each value of the dictionary(each dna sequence)
-    
-    count=0
-    for x in info.values():
-        count+=1
-        print("sequence",count)#it counts the sequences in the file in order to get a clearer output
-        reading1=read_file1(x)
-        reading2=read_file2(x)
-        reading3=read_file3(x)
+                info[header]=info[header]+line #here we add the value(the lines that do not have >
+    print("This is the info dictionary:" ) #comment this out in final code
+    print(info) #comment this out in final code. 
+    return info
 
 
-        comp_strand=makereverse(x)
-        #print("Complementary strand ",comp_strand)    
-        re_com_strand=reverse(comp_strand)
-        #print("reverse str",re_com_strand)
-        reading4=read_file4(re_com_strand)
-        #print("reading4",reading4)
-        reading5=read_file5(re_com_strand)
-        #print("reading5",reading5)
-        reading6=read_file6(re_com_strand)
-        #print("reading6",reading6)
-        start, length, seq=findORF(reading1,orf_length)
-        print("|Frame=1, Strand= + ","POS=",start+1,"LEN=",length-1, seq)
-        start, length, seq=findORF(reading2,orf_length)
-        print("|Frame=2, Srand= +","POS=",start+1,"LEN=",length-1, seq)
-        start, length, seq=findORF(reading3,orf_length)
-        print("|Frame=3, Strand= +","POS=",start+1,"LEN=",length-1, seq)
-        start, length, seq=findORF(reading4,orf_length)
-        print("|Frame=1, Strand=- ","POS=",start+1,"LEN=",length-1, seq)
-        start, length, seq=findORF(reading5,orf_length)
-        print("|Frame=2, Strand= - ","POS=",start+1,"LEN=",length-1, seq)
-        start, length, seq=findORF(reading6,orf_length)
-        print("|Frame=3,Strand= -","POS=",start+1,"LEN=",length-1, seq)
-          
-        
-#we define the funtions called above    
-def startup_message():
-    print("""This program will find the orfs in your sequence.Enter the name
-    of your sequence and press enter to continue\n\n""")
-
-def read_file1(dna):
-    for x in dna:
-        reading1=dna[0:]#reading1 starts in the position 0 for each dna sequence(x)=reading frame1
-        return reading1
-def read_file2(dna): 
-    for x in dna:
-        reading2=dna[1:]#same position1=reading frame2
-        return reading2
-def read_file3(dna):
-    for x in dna:
-        reading3=dna[2:]#same position2=reading frame 3
-        return reading3
-
-    
-
-#Sandra
-
-# convert to reverse compliment 
-# than use this in a loop to process multiple seqs in a file.
-def makereverse(Seq):
-    #first change from upper to lowercase
-    seqA2t=Seq.replace("A","t")
-    seqT2a=seqA2t.replace("T","a")
-    seqC2g=seqT2a.replace("C", "g")
-    seqG2c=seqC2g.replace("G","c")
-    seqdnacomp=seqG2c.upper()
-    return seqdnacomp
-def reverse(x):
-    re_seq=x[::-1]
-    return re_seq
-def read_file4(dna):
-    for x in dna:
-        reading4=dna[0:]#reading1 starts in the position 0 for each dna sequence(x)=reading frame1
-        return reading4
-def read_file5(dna): 
-    for x in dna:
-        reading5=dna[1:]#same position1=reading frame2
-        return reading5
-def read_file6(dna):
-    for x in dna:
-        reading6=dna[2:]#same position2=reading frame 3
-        return reading6    
 
 
-#function for open reading frames.
-   
-def findORF(dna, orf_length):
-    min=orf_length
-    pattern="A[TU]G[AUTGC]{" +str(min)+ """,}(TAA|TAG|TGA)"""
-    ORF=re.finditer(pattern,dna)
-    for match in ORF:
-        run_start=match.start()
-        run_len=len(dna)
-        length=run_len-run_start
-        seq=match.group()
-        return run_start, length, seq
-
-
-main()
-###Here ends the part that Karina was runing It has parts from Sandra and from me because I put both parts together in order to run the code 
-#and see the results.The parts were from before the update that Sandra made yesterday night
-#the output until here is:
-#seq1
-#frame 1 strand+ pos len
-#and the sequence
-#frame 2 the same
-#seq2
-#frames 1 until 6 the same. 
-
-
-#Sandra
-#part 3 
-#work in progess
-#import form my part of code remove in final only need once
-import re
-# convert to reverse compliment 
-# than use this in a loop to process multiple seqs in a file.
-# convert to reverse compliment 
-# than use this in a loop to process multiple seqs in a file.
-#updated makereversefunction to actually reverse and not just complement.
+#Sandra's code
+#This function will be used to complement ande reverse the values in the 
+    #info dictionary created by Karina's code 
+    #It makes a new dictionary 
+    #The key= the same key from info dictionary "Accession#/name"
+    #The value= the seq complemted and reversed.
 def makereverse(seq): #Author Sandra Shannon
     #first change from upper to lowercase
-    seqA2t=seq.replace("A","t")
-    seqT2a=seqA2t.replace("T","a")
-    seqC2g=seqT2a.replace("C", "g")
-    seqG2c=seqC2g.replace("G","c")
-    seqdnacomp=seqG2c.upper()
-    seqdnareversed=seqdnacomp[::-1]
-    return seqdnareversed
+    reverseseqdic={}
+    for key, value in seq.items():
+        seqA2t=value.replace("A","t")
+        seqT2a=seqA2t.replace("T","a")
+        seqC2g=seqT2a.replace("C", "g")
+        seqG2c=seqC2g.replace("G","c")
+        seqdnacomp=seqG2c.upper()
+        seqdnareversed=seqdnacomp[::-1]
+        samekey=key
+        reverseseqdic[samekey]=seqdnareversed
+    #print(reverseseqdic)
+    return reverseseqdic
     
-#new code 16Mar2021
-#test sequences 
-TestSeq= """CCTCAGCGAGGACAGCAAGGGACTAGCCAGGAGGGAGAACAGAAACTCCAGAACATCTTGGAAATAGCTCCCAGAAAAGCAAGCAGCCAACCAGGCAGGTTCTGTCCCTTTCACTCACTGGCCCAAGGCGCCACATCTCCCTCCAGAAAAGACACCATGAGCACAGAAAGCATGATCCGCGACGTGGAACTGGCAGAAGAGGCACTCCCCCAAAAGATGGGGGGCTTCCAGAACTCCAGGCGGTGCCTATGTCTCAGCCTCTTCTCATTCCTGCTTGTGGCAGGGGCCACCACGCTCTTCTGTCTACTGAACTTCGGGGTGATCGGTCCCCAAAGGGATGAGAAGTTCCCAAATGGCCTCCCTCTCATCAGTTCTATGGCCCAGACCCTCACACTCAGATCATCTTCTCAAAATTCGAGTGACAAGCCTGTAGCCCACGTCGTAGCAAACCACCAAGTGGAGGAGCAGCTGGAGTGGCTGAGCCAGCGCGCCAACGCCCTCCTGGCCAACGGCATGGATCTCAAAGACAACCAACTAGTGGTGCCAGCCGATGGGTTGTACCTTGTCTACTCCCAGGTTCTCTTCAAGGGACAAGGCTGCCCCGACTACGTGCTCCTCACCCACACCGTCAGCCGATTTGCTATCTCATACCAGGAGAAAGTCAACCTCCTCTCTGCCGTCAAGAGCCCCTGCCCCAAGGACACCCCTGAGGGGGCTGAGCTCAAACCCTGGTATGAGCCCATATACCTGGGAGGAGTCTTCCAGCTGGAGAAGGGGGACCAACTCAGCGCTGAGGTCAATCTGCCCAAGTACTTAGACTTTGCGGAGTCCGGGCAGGTCTACTTTGGAGTCATTGCTCTGTGAAGGGAATGGGTGTTCATCCATTCTCTACCCAGCCCCCACTCTGACCCCTTTACTCTGACCCCTTTATTGTCTACTCCTCAGAGCCCCCAGTCTGTATCCTTCTAACTTAGAAAGGGGATTATGGCTCAGGGTCCAACTCTGTGCTCAGAGCTTTCAACAACTACTCAGAAACACAAGATGCTGGGACAGTGACCTGGACTGTGGGCCTCTCATGCACCACCATCAAGGACTCAAATGGGCTTTCCGAATTCACTGGAGCCTCGAATGTCCATTCCTGAGTTCTGCAAAGGGAGAGTGGTCAGGTTGCCTCTGTCTCAGAATGAGGCTGGATAAGATCTCAGGCCTTCCTACCTTCAGACCTTTCCAGATTCTTCCCTGAGGTGCAATGCACAGCCTTCCTCACAGAGCCAGCCCCCCTCTATTTATATTTGCACTTATTATTTATTATTTATTTATTATTTATTTATTTGCTTATGAATGTATTTATTTGGAAGGCCGGGGTGTCCTGGAGGACCCAGTGTGGGAAGCTGTCTTCAGACAGACATGTTTTCTGTGAAAACGGAGCTGAGCTGTCCCCACCTGGCCTCTCTACCTTGTTGCCTCCTCTTTTGCTTATGTTTAAAACAAAATATTTATCTAACCCAATTGTCTTAATAACGCTGATTTGGTGACCAGGCTGTCGCTACATCACTGAACCTCTGCTCCCCACGGGAGCCGTGACTGTAATCGCCCTACGGGTCATTGAGAGAAATAA"""
-#function for open reading frames.#Author Sandra Shannon
-orf_length=eval(input("enter the minimum orf's length "))#ask for length orf
-def findORF(seqtosearch, orf_length):
-    min=orf_length
-    pattern="A[TU]G[AUTGC]{" +str(min)+ """,}(TAA|TAG|TGA)"""
-    for key, value in seqtosearch.items():
-        ORF=re.finditer(pattern, value)
-        for match in ORF:
-            run_start=match.start()
-            seq=match.group()
-            run_len=len(seq)
-            print("|FRAME="+key+" POS="+str(run_start)+" LEN="+str(run_len)+"\n"+seq)
+#This code splits the DNA seq into codons if can be ran on the sequences 
+# This function is used inside the finding frames functions. 
+#It only works on one sequence at a time 
+#The output is a string. 
+def splitintocodon(DNAseq): #Author Sandra Shannon
+    #Calculates where the last codon should start. 
+    last_codon_start=len(DNAseq)-2
+    codon_list=[]
+    #loop to make codons if 1st frame
+    for start in range(0, last_codon_start, 3):
+        codon=DNAseq[start:start+3]+" "
+        codon_list.append(codon)
+        #print(codon_list)
+    codon_string=''
+    codon_string=codon_string.join(codon_list)
+    #print(codon_string)
+    return codon_string
 
-
-        
-
-#Sandra- todo find 4-6 ORFS, strat postion, len-done startpostion, len and seq
-#16Mar2020 sandra new todo match input code to here, creat a new dictorany to store the print("|FRAME... data.)
-    
-#new code 23Mar2021 SBS
-#function for getting the Frames #Author Sandra Shannon
-def findingframesfoward(seq): 
+#function for getting the foward Frames(1,2,3) it works on
+    # info dictionary createdby Karina's code  
+    # It makes a new dictionary for the foward frames
+    # The key = >Accession#/name_of_seq | Frame#
+    # The value= the seq for that frame split into codons. 
+#Author Sandra Shannon
+def findingframesfoward(seq): #Author Sandra Shannon
     nextstartbase=0
     frameconter=1
     frames={}
-    for start in range(0,3):
-        seqofframe=seq[nextstartbase:len(seq)]
-        key=str(frameconter)
-        value=seqofframe
-        frames[key]=value
-        #print(frames)
-        nextstartbase+=1
-        frameconter+=1
+    for key, value in seq.items():
+        for start in range(0,3):
+            seq=value
+            seqofframe=seq[nextstartbase:len(seq)]
+            framekey=">"+key+"| Frame"+str(frameconter)
+            framevalue=splitintocodon(seqofframe)
+            frames[framekey]=framevalue
+            #print(frames)
+            nextstartbase+=1
+            frameconter+=1
+        frameconter=1
+    print("This is the foward frames:", frames) #comment this out in the final code 
     return frames
 
-def findingframesreverse(reverseseq): #Author Sandra Shannon
+
+
+#function for getting the reverse Frames(4,5,6) it works on
+    # on the reverse dictionary created by the makereverse(seq) function 
+    # It makes a new dictionary for the reverse frames
+    # The key = >Accession#/name_of_seq | Frame#
+    # The value= the seq for that frame split into codons. 
+#Author Sandra Shannon
+def findingframesreverse(seq): #Author Sandra Shannon
     nextstartbase=0
     frameconter=4
     frames={}
-    for start in range(0,3):
-        seqofframe=reverseseq[nextstartbase:len(reverseseq)]
-        key=str(frameconter)
-        value=seqofframe
-        frames[key]=value
-        #print(frames)
-        nextstartbase+=1
-        frameconter+=1
+    for key, value in seq.items():
+        for start in range(0,3):
+            seq=value
+            seqofframe=seq[nextstartbase:len(seq)]
+            framekey=">"+key+"| Frame"+str(frameconter)
+            framevalue=splitintocodon(seqofframe)
+            frames[framekey]=framevalue
+            #print(frames)
+            nextstartbase+=1
+            frameconter+=1
+        frameconter=4
+    print("This is the reverse frames:", frames) #comment this out in the final code 
     return frames
 
+#function for open reading frames.
+#I believe it works now. it loops though the dictionary. And for each value in the 
+    #dictionary it looks for start and stops codons put them in a list than
+    # it take the first element from the startpostion list and connects it to every element 
+    # in the stoppostion list. It see if it large than 50 (with no spaces) if so it adds it 
+    # to the ORFdic (inculding all the need info)
+#Author Sandra Shannon
+def findORF(seqtosearch, orf_length):
+    ORFdic={}
 
-#Testing stuff
-reverseseq=makereverse(TestSeq)       
-#print(findingframesfoward(TestSeq))
-#print(findingframesreverse(reverseseq))
-frowardframes=findingframesfoward(TestSeq)
-reverseframes=findingframesreverse(reverseseq)
-ORFs=findORF(frowardframes, orf_length)
-ORFs=findORF(reverseframes,orf_length)
-#to do make the functions makereverse(seq) findingframesfoward(seq) findingframesreverse(reverseseq) work with the input dictonary. This can be done similar to the  findORF function
+    for key, value in seqtosearch.items():
+        startpostion=[]
+        stoppostion=[]
+        seqs={}
+        keyfullname=key
+        min=orf_length
+        Start=re.finditer(r"ATG", value)
+        for match in Start:
+            startcodon=match.start()
+            startpostion.append(startcodon)
+        Stop=re.finditer(r"(TAA|TAG|TGA)", value)
+        for match in Stop:
+            stopcodon=match.start()
+            stoppostion.append(stopcodon)
+        for postion in startpostion:
+            start=postion
+            for positon in stoppostion:
+                stop=positon+3
+                seq=value[start:stop]
+                seqnospace=seq.replace(" ","")
+                seqlen=len(seqnospace)
+                if seqlen>=min:
+                    newkey=keyfullname+" POS="+str(start)+" LEN="+str(seqlen)
+                    seqs[start]=seq
+                    print(newkey+"\n"+seq)# remove in final code
+                    ORFdic[newkey]=seq
+        
+            
+    return ORFdic
+
+# This is the main function will call the functions are called 
+# It creats the program. 
+
+def main():
+    Seqdic=getfile_info()
+    orf_length=get_orflength()
+    Fowardframes=findingframesfoward(Seqdic)
+    ReverseSeqdic=makereverse(Seqdic)
+    Reverseframes=findingframesreverse(ReverseSeqdic)
+    FowardORFdic=findORF(Fowardframes, orf_length)
+    ReverseORFdic=findORF(Reverseframes, orf_length)
+    print("this is the Foward ORF dictiornay:", FowardORFdic)
+    print("this is the Reverse ORF dictionary", ReverseORFdic)
 
 
-#Author: Kianna Blount
-import re
-import os
-
-from Bio import SeqIO
-
-#Input DNA sequence info and codons
-data=SeqIO.read("testsequencefile.fasta","fasta")
-seq = str(data.seq)
-startcodon=["a","t","g"]
-stopcodon=[["t","a","g"],["t","g","a"],["t","a","a"]]
-
-#Search for start codons
-for j in len(seq):
-    a=0
-    b=j
-    if seq[b]==startcodon[a]:
-        a+=1
-        b+=1
-        if seq[b]==startcodon[a]:
-            a+=1
-            b+=1
-            if seq[b]==startcodon[a]:
-                orfstart.append(j)
-
-#Search for stop codons
-for i in len(stopcodon):
-    for j in len(seq):
-        a=0
-        b=j
-        if seq[b]==stopcodon[i][a]:
-            a+=1
-            b+=1
-            if seq[b]==stopcodon[i][a]:
-                a+=1
-                b+=1
-                if seq[b]==stopcodon[i][a]:
-                    orfstop.append(j)
-
-#Determine ORF
-i=0 ; j=0;
-while i<len(orfstart):
-    b=0
-    while j<len(orfstop):
-        a=j
-        if orfstop[j]>orfstart[i]:
-            "|"
-        else:
-            j+=1
-        i+=1
-        j=a
+main()
+#The FowardORFlist and ReverseORFlist are dictionarys That can be looped through to make the final output
+    #ORFdic{key+" POS="+str(run_start)+" LEN="+str(run_len):  seq}
+#then Seth could use a loop to loop through the dictionary and have it print to a file. 
