@@ -6,6 +6,10 @@ import re
 #startup_message()#Display the start-up message #I think this is supposed to be a function of something 
     #it does not do anything
 
+
+#Sandra put Karina's code in a function to run it below in the main function. 
+#Sandra also made a get orf_length function to use later 
+#So sandra just broke Karina's code into two piece but did not change the code. 
 def get_orflength():
     orf_length=eval(input("enter the minimum orf's length "))#ask for length orf
     return orf_length
@@ -21,8 +25,8 @@ def getfile_info():
                 continue
             else:
                 info[header]=info[header]+line #here we add the value(the lines that do not have >
-    print("This is the info dictionary:" ) #comment this out in final code
-    print(info) #comment this out in final code. 
+    #print("This is the info dictionary:" ) #comment this out in final code
+    #print(info) #comment this out in final code. 
     return info
 
 
@@ -87,8 +91,7 @@ def findingframesfoward(seq): #Author Sandra Shannon
             #print(frames)
             nextstartbase+=1
             frameconter+=1
-        frameconter=1
-    print("This is the foward frames:", frames) #comment this out in the final code 
+    #print("This is the foward frames:", frames) #comment this out in the final code 
     return frames
 
 
@@ -101,28 +104,23 @@ def findingframesfoward(seq): #Author Sandra Shannon
 #Author Sandra Shannon
 def findingframesreverse(seq): #Author Sandra Shannon
     nextstartbase=0
-    frameconter=4
+    frameconter=-1
     frames={}
     for key, value in seq.items():
         for start in range(0,3):
             seq=value
             seqofframe=seq[nextstartbase:len(seq)]
-            framekey=">"+key+"| Frame"+str(frameconter)
+            framekey=">"+key+"| Frame="+str(frameconter)
             framevalue=splitintocodon(seqofframe)
             frames[framekey]=framevalue
             #print(frames)
             nextstartbase+=1
-            frameconter+=1
-        frameconter=4
-    print("This is the reverse frames:", frames) #comment this out in the final code 
+            frameconter-=1
+    #print("This is the reverse frames:", frames) #comment this out in the final code 
     return frames
 
 #function for open reading frames.
-#I believe it works now. it loops though the dictionary. And for each value in the 
-    #dictionary it looks for start and stops codons put them in a list than
-    # it take the first element from the startpostion list and connects it to every element 
-    # in the stoppostion list. It see if it large than 50 (with no spaces) if so it adds it 
-    # to the ORFdic (inculding all the need info)
+# This function does not work correctly right now. 
 #Author Sandra Shannon
 def findORF(seqtosearch, orf_length):
     ORFdic={}
@@ -141,6 +139,7 @@ def findORF(seqtosearch, orf_length):
         for match in Stop:
             stopcodon=match.start()
             stoppostion.append(stopcodon)
+        print("\n\n\nStart postions:\n", startpostion ,"\n\nStop postions:\n", stoppostion)
         for postion in startpostion:
             start=postion
             for positon in stoppostion:
@@ -151,10 +150,8 @@ def findORF(seqtosearch, orf_length):
                 if seqlen>=min:
                     newkey=keyfullname+" POS="+str(start)+" LEN="+str(seqlen)
                     seqs[start]=seq
-                    print(newkey+"\n"+seq)# remove in final code
-                    ORFdic[newkey]=seq
-        
-            
+                    #print(newkey+"\n"+seq)# remove in final code
+                    ORFdic[newkey]=seq       
     return ORFdic
 
 # This is the main function will call the functions are called 
