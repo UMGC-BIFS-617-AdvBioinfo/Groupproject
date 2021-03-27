@@ -104,7 +104,7 @@ def findingframesfoward(seq): #Author Sandra Shannon
 #Author Sandra Shannon
 def findingframesreverse(seq): #Author Sandra Shannon
     nextstartbase=0
-    frameconter=-1
+    frameconter=-4
     frames={}
     for key, value in seq.items():
         for start in range(0,3):
@@ -139,7 +139,7 @@ def findORF(seqtosearch, orf_length):
         for match in Stop:
             stopcodon=match.start()
             stoppostion.append(stopcodon)
-        print("\n\n\nStart postions:\n", startpostion ,"\n\nStop postions:\n", stoppostion)
+        #print("\n\n\nStart postions:\n", startpostion ,"\n\nStop postions:\n", stoppostion)
         for postion in startpostion:
             start=postion
             for positon in stoppostion:
