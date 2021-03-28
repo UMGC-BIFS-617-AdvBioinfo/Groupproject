@@ -17,15 +17,15 @@ def getfile_info():
     info={}#creates dictionary
     with open(my_seq)as file:#open file
         for line in file:
-            line=line.upper().rstrip('\n').replace("-","")#convert to upper,get rid of newlines and gaps
+            line=line.upper().rstrip('\n').replace("-","").replace(" ","")#convert to upper,get rid of newlines and gaps
             if line.startswith('>'):
                 header=line[1:]
                 info[header]=''#Here we have the dictionary info with the key header that have all the lines that start with >, there is no value yet
                 continue
             else:
                 info[header]=info[header]+line #here we add the value(the lines that do not have >
-    #print("This is the info dictionary:" ) #comment this out in final code
-    #print(info) #comment this out in final code. 
+    print("This is the info dictionary:" ) #comment this out in final code
+    print(info) #comment this out in final code. 
     return info
 
 
@@ -93,7 +93,8 @@ def findingframesfoward(seq):
             nextstartbase+=1
             frameconter+=1
         frameconter=1
-    #print("This is the foward frames:", frames) #comment this out in the final code 
+        nextstartbase=0
+    print("This is the foward frames:", frames) #comment this out in the final code 
     return frames
 
 
@@ -119,7 +120,8 @@ def findingframesreverse(seq): #Author Sandra Shannon
             nextstartbase+=1
             frameconter-=1
         frameconter=-4
-    #print("This is the reverse frames:", frames) #comment this out in the final code 
+        nextstartbase=0
+    print("This is the reverse frames:", frames) #comment this out in the final code 
     return frames
 
 #function for open reading frames.
