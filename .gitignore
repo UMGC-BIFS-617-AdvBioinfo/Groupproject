@@ -181,3 +181,5 @@ main()
 #The FowardORFlist and ReverseORFlist are dictionarys That can be looped through to make the final output
     #ORFdic{key+" POS="+str(run_start)+" LEN="+str(run_len):  seq}
 #then Seth could use a loop to loop through the dictionary and have it print to a file. 
+
+#this version does not have the frame functions combined 
