@@ -17,7 +17,7 @@ def getfile_info():
     info={}#creates dictionary
     with open(my_seq)as file:#open file
         for line in file:
-            line=line.upper().rstrip('\n').replace("-","")#convert to upper,get rid of newlines and gaps
+            line=line.upper().rstrip('\n').replace("-","").replace(" ","")#convert to upper,get rid of newlines and gaps
             if line.startswith('>'):
                 header=line[1:]
                 info[header]=''#Here we have the dictionary info with the key header that have all the lines that start with >, there is no value yet
@@ -39,18 +39,14 @@ def getfile_info():
     #The value= the seq complemted and reversed.
 def makereverse(seq): #Author Sandra Shannon
     #first change from upper to lowercase
-    reverseseqdic={}
-    for key, value in seq.items():
-        seqA2t=value.replace("A","t")
-        seqT2a=seqA2t.replace("T","a")
-        seqC2g=seqT2a.replace("C", "g")
-        seqG2c=seqC2g.replace("G","c")
-        seqdnacomp=seqG2c.upper()
-        seqdnareversed=seqdnacomp[::-1] #Author Karina Brignoni
-        samekey=key
-        reverseseqdic[samekey]=seqdnareversed
-    #print(reverseseqdic)
-    return reverseseqdic
+    seqA2t=seq.replace("A","t")
+    seqT2a=seqA2t.replace("T","a")
+    seqC2g=seqT2a.replace("C", "g")
+    seqG2c=seqC2g.replace("G","c")
+    seqdnacomp=seqG2c.upper()
+    seqdnareversed=seqdnacomp[::-1] #Author Karina Brignoni
+    #print(seqdnareversed)
+    return seqdnareversed
 
 #Author Sandra Shannon
 #This code splits the DNA seq into codons if can be ran on the sequences 
@@ -65,11 +61,14 @@ def splitintocodon(DNAseq): #Author Sandra Shannon
     for start in range(0, last_codon_start, 3):
         codon=DNAseq[start:start+3]+" "
         codon_list.append(codon)
-        #print(codon_list)
+    #print(codon_list)
     codon_string=''
     codon_string=codon_string.join(codon_list)
+    lastchart=len(codon_string)
+    Newseq=codon_string[0:lastchart-1]
     #print(codon_string)
-    return codon_string
+    #print(Newseq)
+    return Newseq
 
 #function for getting the foward Frames(1,2,3) it works on
     # info dictionary createdby Karina's code  
@@ -78,22 +77,38 @@ def splitintocodon(DNAseq): #Author Sandra Shannon
     # The value= the seq for that frame split into codons. 
 
 #Author Sandra Shannon
-def findingframesfoward(seq):
+def findingframes(seq):
     nextstartbase=0
+    rnextstartbase=0
     frameconter=1
+    rframeconter=-4
     frames={}
     for key, value in seq.items():
+        seq=value
         for start in range(0,3):
-            seq=value
             seqofframe=seq[nextstartbase:len(seq)]
             framekey=">"+key+"| Frame"+str(frameconter)
+            #print("split into codon")
             framevalue=splitintocodon(seqofframe)
             frames[framekey]=framevalue
             #print(frames)
             nextstartbase+=1
             frameconter+=1
+        for start in range(0,3):
+            rseq=makereverse(seq)
+            rseqofframe=rseq[rnextstartbase:len(rseq)]
+            rframekey=">"+key+"| Frame="+str(rframeconter)
+            #print("split into codon")
+            rframevalue=splitintocodon(rseqofframe)
+            frames[rframekey]=rframevalue
+            #print(frames)
+            rnextstartbase+=1
+            rframeconter-=1
+        rframeconter=-4
         frameconter=1
-    #print("This is the foward frames:", frames) #comment this out in the final code 
+        nextstartbase=0
+        rnextstartbase=0
+    #print("This is the frames:", frames) #comment this out in the final code 
     return frames
 
 
@@ -104,23 +119,23 @@ def findingframesfoward(seq):
     # The key = >Accession#/name_of_seq | Frame#
     # The value= the seq for that frame split into codons. 
 #Author Sandra Shannon
-def findingframesreverse(seq): #Author Sandra Shannon
-    nextstartbase=0
-    frameconter=-4
-    frames={}
-    for key, value in seq.items():
-        for start in range(0,3):
-            seq=value
-            seqofframe=seq[nextstartbase:len(seq)]
-            framekey=">"+key+"| Frame="+str(frameconter)
-            framevalue=splitintocodon(seqofframe)
-            frames[framekey]=framevalue
-            #print(frames)
-            nextstartbase+=1
-            frameconter-=1
-        frameconter=-4
-    #print("This is the reverse frames:", frames) #comment this out in the final code 
-    return frames
+# def findingframesreverse(seq): #Author Sandra Shannon
+#     nextstartbase=0
+#     frameconter=-4
+#     frames={}
+#     for key, value in seq.items():
+#         for start in range(0,3):
+#             seq=value
+#             seqofframe=seq[nextstartbase:len(seq)]
+#             framekey=">"+key+"| Frame="+str(frameconter)
+#             framevalue=splitintocodon(seqofframe)
+#             frames[framekey]=framevalue
+#             #print(frames)
+#             nextstartbase+=1
+#             frameconter-=1
+#         frameconter=-4
+#     #print("This is the reverse frames:", frames) #comment this out in the final code 
+#     return frames
 
 #function for open reading frames.
 # This function does not work correctly right now. 
@@ -166,16 +181,11 @@ def main():
     Seqdic=getfile_info()
     orf_length=get_orflength()
     print()
-    Fowardframes=findingframesfoward(Seqdic)
-    ReverseSeqdic=makereverse(Seqdic)
-    Reverseframes=findingframesreverse(ReverseSeqdic)
-    FowardORFdic=findORF(Fowardframes, orf_length)
-    ReverseORFdic=findORF(Reverseframes, orf_length)
-    print("this is the Foward ORF dictiornay:", FowardORFdic)#remove in final code?
+    allframes=findingframes(Seqdic)
+    ORFdic=findORF(allframes, orf_length)
     print()
-    print()
-    print("this is the Reverse ORF dictionary", ReverseORFdic)#remove in final code?
-
+    print("this is the ORF dictiornay:", ORFdic)#remove in final code?
+   
 
 main()
 #The FowardORFlist and ReverseORFlist are dictionarys That can be looped through to make the final output
