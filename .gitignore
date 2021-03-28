@@ -3,8 +3,6 @@ import re
 import os
 
 #Author Karina Brignoni
-#startup_message()#Display the start-up message #I think this is supposed to be a function of something 
-    #it does not do anything
 
 def startup_message():
     print("This program will find the orfs in your sequence.\nYou will enter your sequence file name then press enter to continue")
