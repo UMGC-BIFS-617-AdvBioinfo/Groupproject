@@ -169,6 +169,18 @@ def findORF(seqtosearch, orf_length):
                     #print(newkey+"\n"+seq)# remove in final code
                     ORFdic[newkey]=seq   
     return ORFdic
+ 
+ #Author Seth Babin   
+def output (filename, dic):
+    newfile=open(filename, "w")
+    newfile.write("The Open Reading Frames that were found:\n")
+    print("The output is here:")
+    for key,value in dic.items():
+        print(key)
+        print(value)
+        newfile.write(key+ "\n")
+        newfile.write(value+ "\n")
+    newfile.close
 
 # This is the main function will call the functions are called 
 # It creats the program. 
@@ -178,14 +190,19 @@ def main():
     startup_message()
     Seqdic=getfile_info()
     orf_length=get_orflength()
-    print()
+    #print()
     allframes=findingframes(Seqdic)
     ORFdic=findORF(allframes, orf_length)
-    print()
-    print("this is the ORF dictiornay:", ORFdic)#remove in final code?
+    #print()
+    #print("this is the ORF dictiornay:", ORFdic)#remove in final code?
+    
+    #Author Seth Babin
+    filename = 'group2_output.txt'
+    output(filename, ORFdic)
+main()
    
 
-main()
+
 #The FowardORFlist and ReverseORFlist are dictionarys That can be looped through to make the final output
     #This is the info that is in the dictionary
     #ORFdic{key=>Assesion | Frame=# POS=# LEN=# :  value=seq}
