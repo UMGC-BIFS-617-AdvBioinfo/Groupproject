@@ -187,5 +187,6 @@ def main():
 
 main()
 #The FowardORFlist and ReverseORFlist are dictionarys That can be looped through to make the final output
-    #ORFdic{key+" POS="+str(run_start)+" LEN="+str(run_len):  seq}
+    #This is the info that is in the dictionary
+    #ORFdic{key=>Assesion | Frame=# POS=# LEN=# :  value=seq}
 #then Seth could use a loop to loop through the dictionary and have it print to a file. 
