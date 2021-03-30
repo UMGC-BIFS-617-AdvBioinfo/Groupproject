@@ -197,7 +197,7 @@ def main():
     #print("this is the ORF dictiornay:", ORFdic)#remove in final code?
     
     #Author Seth Babin
-    filename = 'group2_output.txt'
+    filename = 'group2_output.fasta'
     output(filename, ORFdic)
 main()
    
